@@ -4,14 +4,19 @@ import nodemailer from "nodemailer";
 import { render } from "@react-email/components";
 
 
+const outlook_email = process.env.OUTLOOK_EMAIL;
+const outlook_password = process.env.OUTLOOK_PASSWORD;
 
 const transporter = nodemailer.createTransport({
   host: "smtp.office365.com",
   port: 587,
   secure: false,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: outlook_email || process.env.OUTLOOK_EMAIL,
+    pass: outlook_password || process.env.OUTLOOK_PASSWORD,
+  },
+  tls: {
+    ciphers: "SSLv3",
   },
 });
 
@@ -23,11 +28,11 @@ export async function sendVerificationEmail(
   try {
     const emailHtml = render(VerificationEmail({ username, otp: verifyCode }));
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: outlook_email || process.env.OUTLOOK_EMAIL,
       to: email,
       subject: "M4You | Verification Code",
       html: emailHtml,
-    })
+    });
 
     return {
       success: true,
