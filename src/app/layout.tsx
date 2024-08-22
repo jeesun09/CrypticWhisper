@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthProvider>
-        <body className={`min-h-screen min-w-full ${inter.className}`}>
+        <body className={inter.className}>
           <Navbar />
           {children}
           <Toaster />

@@ -87,22 +87,24 @@ const Page = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-800">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
-            Join M4You
+    <div className="flex justify-center items-center min-h-screen bg-gray-900 py-6 px-4">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl lg:text-4xl font-extrabold text-gray-800 mb-4">
+            Create Your M4You Account
           </h1>
-          <p className="mb-4">Sign up to start your anonymous adventure</p>
+          <p className="text-gray-600">
+            Sign up to start exploring anonymous messaging and more.
+          </p>
         </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               name="username"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel className="text-gray-700">Username</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="username"
@@ -113,14 +115,17 @@ const Page = () => {
                       }}
                     />
                   </FormControl>
-                  {isCheckingUsername && <Loader2 className="animate-spin" />}
+                  {isCheckingUsername && (
+                    <Loader2 className="animate-spin h-5 w-5 text-gray-500" />
+                  )}
                   <p
-                    className={`text-sm ${
+                    className={`text-sm mt-1 ${
                       usernameMessage === "Username is available"
                         ? "text-green-500"
                         : "text-red-500"
                     }`}
-                  >{usernameMessage}
+                  >
+                    {usernameMessage}
                   </p>
                   <FormMessage />
                 </FormItem>
@@ -131,7 +136,7 @@ const Page = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="text-gray-700">Email</FormLabel>
                   <FormControl>
                     <Input placeholder="email" {...field} />
                   </FormControl>
@@ -144,7 +149,7 @@ const Page = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-gray-700">Password</FormLabel>
                   <FormControl>
                     <Input type="password" placeholder="password" {...field} />
                   </FormControl>
@@ -152,10 +157,14 @@ const Page = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              className="w-full text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 rounded-lg"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? (
                 <>
-                  <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                  <Loader2 className="animate-spin mr-2 h-5 w-5" />
                   <span>Please wait</span>
                 </>
               ) : (
@@ -165,7 +174,7 @@ const Page = () => {
           </form>
         </Form>
         <div className="text-center mt-4">
-          <p>
+          <p className="text-gray-600">
             Already a member?{" "}
             <Link href="/sign-in" className="text-blue-600 hover:text-blue-800">
               Sign in

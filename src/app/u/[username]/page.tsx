@@ -92,8 +92,10 @@ const SendMessage = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto my-2 p-6 bg-white shadow rounded-lg">
-      <h1 className="text-2xl font-bold text-center mb-6">Send Message</h1>
+    <div className="max-w-lg mx-auto my-4 p-6 bg-white shadow-lg rounded-lg">
+      <h1 className="text-3xl font-semibold text-gray-900 text-center mb-6">
+        Send an Anonymous Message
+      </h1>
       {/* Your additional code here */}
 
       <Form {...form}>
@@ -103,12 +105,12 @@ const SendMessage = () => {
             name="content"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-semibold">
-                  Send Annonymous Message to @{username}
+                <FormLabel className="text-gray-800">
+                  Message to @{username}
                 </FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Type your message here"
+                    placeholder="Write your message here..."
                     className="resize-none"
                     {...field}
                   />
