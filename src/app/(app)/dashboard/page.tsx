@@ -132,7 +132,6 @@ const Page = () => {
     });
   }
 
-  console.log('message', messages);//todo remove
   
 
   if(status === 'loading'){

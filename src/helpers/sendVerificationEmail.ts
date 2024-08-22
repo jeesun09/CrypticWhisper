@@ -1,24 +1,9 @@
 import VerificationEmail from "../../emails/VerificationEmail";
 import { ApiResponse } from "@/types/ApiResponse";
-import nodemailer from "nodemailer";
 import { render } from "@react-email/components";
+import sgMail from "@sendgrid/mail";
 
-
-const outlook_email = process.env.OUTLOOK_EMAIL;
-const outlook_password = process.env.OUTLOOK_PASSWORD;
-
-const transporter = nodemailer.createTransport({
-  host: "smtp.office365.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: outlook_email || process.env.OUTLOOK_EMAIL,
-    pass: outlook_password || process.env.OUTLOOK_PASSWORD,
-  },
-  tls: {
-    ciphers: "SSLv3",
-  },
-});
+sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
 export async function sendVerificationEmail(
   email: string,
@@ -27,19 +12,20 @@ export async function sendVerificationEmail(
 ): Promise<ApiResponse> {
   try {
     const emailHtml = render(VerificationEmail({ username, otp: verifyCode }));
-    await transporter.sendMail({
-      from: outlook_email || process.env.OUTLOOK_EMAIL,
+    const msg = {
       to: email,
+      from: process.env.OUTLOOK_EMAIL!,
       subject: "M4You | Verification Code",
       html: emailHtml,
-    });
-
+    };
+    await sgMail.send(msg);
     return {
       success: true,
-      message: "Verification email sent",
+      message: "Verification code sent successfully",
     };
-  } catch (emailError) {
-    console.error("Error sending verification email", emailError);
+  } catch (error) {
+    console.error("Error sending verification email", error);
+
     return {
       success: false,
       message: "Error sending verification email",
