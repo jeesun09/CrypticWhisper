@@ -1,4 +1,3 @@
-import { resend } from "@/lib/resend";
 import VerificationEmail from "../../emails/VerificationEmail";
 import { ApiResponse } from "@/types/ApiResponse";
 import nodemailer from "nodemailer";
@@ -20,12 +19,6 @@ export async function sendVerificationEmail(
   verifyCode: string
 ): Promise<ApiResponse> {
   try {
-    // await resend.emails.send({
-    //   from: "onboarding@resend.dev",
-    //   to: email,
-    //   subject: "M4You | Verification Code",
-    //   react: VerificationEmail({ username, otp: verifyCode }),
-    // });
     const emailHtml = render(VerificationEmail({ username, otp: verifyCode }));
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
