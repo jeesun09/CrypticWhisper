@@ -68,11 +68,7 @@ const SendMessage = () => {
     api: "/api/suggest-messages",
     initialCompletion: initialSuggestMessages,
   });
-  const messageContent = form.watch("content");
-
-  console.log("completion: ", completion);//todo remove
-  console.log("error: ", error?.message);//todo remove
-  
+  const messageContent = form.watch("content");  
 
   // handle suggest message to content
   const handleSuggestMessageToContent = (message: string) => {

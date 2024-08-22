@@ -19,6 +19,6 @@ export async function POST(request: Request) {
     });
     return result.toDataStreamResponse();
   } catch (error) {
-    console.log("Error sending message:", error);
+    console.error("Error sending message:", error);
   }
 }

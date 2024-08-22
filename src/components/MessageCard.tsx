@@ -1,11 +1,6 @@
 "use client";
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,24 +21,23 @@ import { ApiResponse } from "@/types/ApiResponse";
 import mongoose from "mongoose";
 
 type MessageCardProps = {
-    key: string;
-    message: Message;
-    onMessageDelete: (messageId: string) => void;
-}
+  key: string;
+  message: Message;
+  onMessageDelete: (messageId: string) => void;
+};
 
-const MessageCard = ({key, message, onMessageDelete}: MessageCardProps) => {
-    const {toast} = useToast();
-    const handleDeleteConfirm = async() => {
-        const response = await axios.delete<ApiResponse>(`/api/delete-message/${message._id}`)
-        toast({
-            title: response.data.message,
-        })
-        onMessageDelete(message._id as string);
-    }
-    console.log('Message: ', message);
-    console.log('message._id: ', message._id);
-    
-    
+const MessageCard = ({ key, message, onMessageDelete }: MessageCardProps) => {
+  const { toast } = useToast();
+  const handleDeleteConfirm = async () => {
+    const response = await axios.delete<ApiResponse>(
+      `/api/delete-message/${message._id}`
+    );
+    toast({
+      title: response.data.message,
+    });
+    onMessageDelete(message._id as string);
+  };
+
   return (
     <Card className="border border-gray-200 shadow-sm rounded-lg overflow-hidden">
       <CardHeader className="flex justify-between items-start p-4 border-gray-200">
@@ -90,12 +84,6 @@ const MessageCard = ({key, message, onMessageDelete}: MessageCardProps) => {
 };
 
 export default MessageCard;
-
-
-
-
-
-
 
 /*
 <Card className="border border-gray-200 shadow-sm rounded-lg overflow-hidden">

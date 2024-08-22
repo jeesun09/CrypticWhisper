@@ -60,7 +60,6 @@ const SignIn = () => {
         })
       }
     }
-    console.log("Result: ", result); //Todo: Remove this line
 
     if (result?.url) {
        router.replace("/dashboard");
