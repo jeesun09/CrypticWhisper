@@ -1,13 +1,19 @@
 import crypto from 'crypto';
 
 export default function encryptContent(content: string) : string{
-    const algorithm = 'aes-256-cbc';
-    const key = process.env.ENCRYPTION_KEY as string;
-    const iv = crypto.randomBytes(16);
+  const algorithm = "aes-256-cbc";
+  const keyHex = process.env.ENCRYPTION_KEY as string;
+  const key = Buffer.from(keyHex, "hex");
+  if (key.length !== 32) {
+    throw new Error("Key must be 32 characters long");
+  }
+  const iv = crypto.randomBytes(16);
 
-    const cipher = crypto.createCipheriv(algorithm, Buffer.from(key, 'hex'), iv);
-    let encrypted = cipher.update(content);
-    encrypted = Buffer.concat([encrypted, cipher.final()]);
-    
-    return iv.toString('hex') + ':' + encrypted.toString('hex');
+  const cipher = crypto.createCipheriv(algorithm, key, iv);
+
+  let encrypted = cipher.update(content, "utf-8", "hex");
+  encrypted += cipher.final("hex");
+
+  // Return the IV and encrypted content in hexadecimal format, separated by ':'
+  return iv.toString("hex") + ":" + encrypted;
 }

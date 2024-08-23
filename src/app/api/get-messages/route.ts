@@ -5,6 +5,7 @@ import UserModel, { Message } from "@/model/User";
 import { User } from "next-auth";
 import mongoose from "mongoose";
 import decryptContent from "@/helpers/decryptContent";
+import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   await dbConnect();
@@ -12,7 +13,7 @@ export async function GET(request: Request) {
   const session = await getServerSession(authOptions);
   const user: User = session?.user as User;
   if (!session || !session.user) {
-    return Response.json(
+    return NextResponse.json(
       {
         success: false,
         message: "Unauthorized",
@@ -37,7 +38,7 @@ export async function GET(request: Request) {
     );
     
     if (!user || user.length === 0) {
-      return Response.json(
+      return NextResponse.json(
         {
           success: false,
           message: "No messages found",
@@ -46,7 +47,7 @@ export async function GET(request: Request) {
       );
     }
 
-    return Response.json(
+    return NextResponse.json(
       {
         success: true,
         messages: decryptedMessages,
@@ -55,7 +56,7 @@ export async function GET(request: Request) {
     );
   } catch (error) {
     console.error("Error getting messages:", error);
-    return Response.json(
+    return NextResponse.json(
       {
         success: false,
         message: "Failed to get messages",
