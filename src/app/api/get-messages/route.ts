@@ -1,9 +1,10 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 import dbConnect from "@/lib/db/dbConnect";
-import UserModel from "@/model/User";
+import UserModel, { Message } from "@/model/User";
 import { User } from "next-auth";
 import mongoose from "mongoose";
+import decryptContent from "@/helpers/decryptContent";
 
 export async function GET(request: Request) {
   await dbConnect();
@@ -27,6 +28,13 @@ export async function GET(request: Request) {
       { $sort: { "messages.createdAt": -1 } },
       { $group: { _id: "$_id", messages: { $push: "$messages" } } },
     ]);
+
+    const decryptedMessages = user[0].messages.map(
+      (msg: any): Message => ({
+        ...msg,
+        content: decryptContent(msg.content),
+      })
+    );
     
     if (!user || user.length === 0) {
       return Response.json(
@@ -41,7 +49,7 @@ export async function GET(request: Request) {
     return Response.json(
       {
         success: true,
-        messages: user[0].messages,
+        messages: decryptedMessages,
       },
       { status: 200 }
     );

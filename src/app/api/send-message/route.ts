@@ -1,6 +1,7 @@
 import UserModel from "@/model/User";
 import dbConnect from "@/lib/db/dbConnect";
 import { Message } from "@/model/User";
+import encryptContent from "@/helpers/encryptContent";
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -27,7 +28,8 @@ export async function POST(request: Request) {
         { status: 403 }
       );
     }
-    const newMessage = { content, createdAt: new Date() };
+    const encryptedContent = encryptContent(content);
+    const newMessage = { content: encryptedContent, createdAt: new Date() };
     user.messages.push(newMessage as Message);
     await user.save();
     return Response.json(
