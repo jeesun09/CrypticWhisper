@@ -1,7 +1,8 @@
 import UserModel from "@/model/User";
 import dbConnect from "@/lib/db/dbConnect";
 import { Message } from "@/model/User";
-import encryptContent from "@/helpers/encryptContent";
+import CryptoJS from "crypto-js";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -10,7 +11,7 @@ export async function POST(request: Request) {
   try {
     const user = await UserModel.findOne({ username });
     if (!user) {
-      return Response.json(
+      return NextResponse.json(
         {
           success: false,
           message: "User not found",
@@ -20,7 +21,7 @@ export async function POST(request: Request) {
     }
     //check if user is accepting messages
     if (!user.isAcceptingMessages) {
-      return Response.json(
+      return NextResponse.json(
         {
           success: false,
           message: "User is not accepting messages",
@@ -28,11 +29,14 @@ export async function POST(request: Request) {
         { status: 403 }
       );
     }
-    const encryptedContent = encryptContent(content);
+    const encryptedContent = CryptoJS.AES.encrypt(
+      content,
+      process.env.ENCRYPTION_KEY!
+    ).toString();
     const newMessage = { content: encryptedContent, createdAt: new Date() };
     user.messages.push(newMessage as Message);
     await user.save();
-    return Response.json(
+    return NextResponse.json(
       {
         success: true,
         message: "Message sent successfully",
@@ -41,7 +45,7 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     console.error("Error sending message:", error);    
-    return Response.json(
+    return NextResponse.json(
       {
         success: false,
         message: "Failed to send message",

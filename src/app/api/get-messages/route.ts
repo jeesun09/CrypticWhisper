@@ -4,8 +4,21 @@ import dbConnect from "@/lib/db/dbConnect";
 import UserModel, { Message } from "@/model/User";
 import { User } from "next-auth";
 import mongoose from "mongoose";
-import decryptContent from "@/helpers/decryptContent";
 import { NextResponse } from "next/server";
+import CryptoJS from "crypto-js";
+
+const decryptContent = (encryptedContent: string): string => {
+  try {
+    const bytes = CryptoJS.AES.decrypt(
+      encryptedContent,
+      process.env.ENCRYPTION_KEY!
+    );
+    return bytes.toString(CryptoJS.enc.Utf8);
+  } catch (error) {
+    console.error("Decryption error:", error);
+    return "";
+  }
+};
 
 export async function GET(request: Request) {
   await dbConnect();
@@ -36,7 +49,7 @@ export async function GET(request: Request) {
         content: decryptContent(msg.content),
       })
     );
-    
+
     if (!user || user.length === 0) {
       return NextResponse.json(
         {
