@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /private/
+Disallow: /api/*
+Allow: /
+
+Sitemap: https://m4you.vercel.app/sitemap.xml

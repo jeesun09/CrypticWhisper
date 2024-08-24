@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: "%s | M4You",
   },
   description:
-    "Send anonymous messages easily with M4You, a Next.js application that lets users create shareable public links. Enjoy secure authentication, AI-driven message suggestions, and a fully responsive design for seamless user experience.",
+    "Send anonymous messages easily with M4You. A application that lets users create shareable public links. Enjoy secure authentication, AI-driven message suggestions, and a fully responsive design for seamless user experience.",
   applicationName: "M4You",
   authors: [
     { name: "Jeesun Bari", url: "https://www.linkedin.com/in/jeesun30/" },
@@ -56,26 +56,7 @@ export const metadata: Metadata = {
         alt: "M4You",
       },
     ],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    nocache: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      noimageindex: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  // Format detection
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
+  }
 };
 
 export default function RootLayout({
