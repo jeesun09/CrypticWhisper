@@ -13,14 +13,14 @@ const encode_sans = Encode_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://m4you.vercel.app/"),
+  metadataBase: new URL("https://crypticwhisper.vercel.app/"),
   title: {
-    default: "M4You",
-    template: "%s | M4You",
+    default: "CrypticWhisper",
+    template: "%s | CrypticWhisper",
   },
   description:
-    "Send anonymous messages easily with M4You. A application that lets users create shareable public links. Enjoy secure authentication, AI-driven message suggestions, and a fully responsive design for seamless user experience.",
-  applicationName: "M4You",
+    "Send anonymous messages easily with CrypticWhisper. A application that lets users create shareable public links. Enjoy secure authentication, AI-driven message suggestions, and a fully responsive design for seamless user experience.",
+  applicationName: "Cryptic Whisper",
   authors: [
     { name: "Jeesun Bari", url: "https://www.linkedin.com/in/jeesun30/" },
   ],
@@ -29,34 +29,34 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "M4You",
-    description: "Send anonymous messages easily with M4You.",
-    url: "https://m4you.vercel.app/",
-    siteName: "M4You",
+    title: "Cryptic Whisper",
+    description: "Send anonymous messages easily with Cryptic Whisper.",
+    url: "https://crypticwhisper.vercel.app/",
+    siteName: "Cryptic Whisper",
     type: "website",
     images: [
       {
-        url: "https://github.com/jeesun09/M4You/blob/main/public/Home.png?raw=true",
+        url: "https://github.com/jeesun09/CrypticWhisper/blob/main/public/Home.png?raw=true",
         width: 1200,
         height: 630,
-        alt: "M4You",
+        alt: "Cryptic Whisper",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "M4You",
-    description: "Send anonymous messages easily with M4You.",
+    title: "Cryptic Whisper",
+    description: "Send anonymous messages easily with Cryptic Whisper.",
     creator: "@JeesunSk",
     images: [
       {
-        url: "https://github.com/jeesun09/M4You/blob/main/public/Home.png?raw=true",
+        url: "https://github.com/jeesun09/CrypticWhisper/blob/main/public/Home.png?raw=true",
         width: 1200,
         height: 630,
-        alt: "M4You",
+        alt: "Cryptic Whisper",
       },
     ],
-  }
+  },
 };
 
 export default function RootLayout({

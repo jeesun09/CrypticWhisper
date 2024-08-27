@@ -91,7 +91,7 @@ const Page = () => {
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
         <div className="text-center mb-6">
           <h1 className="text-3xl lg:text-4xl font-extrabold text-gray-800 mb-4">
-            Create Your M4You Account
+            Create Your Cryptic Whisper Account
           </h1>
           <p className="text-gray-600">
             Sign up to start exploring anonymous messaging and more.

@@ -19,7 +19,7 @@ export default function Home() {
             Dive into the World of Anonymous Messages
           </h1>
           <p className="mt-3 md:mt-4 text-base md:text-lg">
-            M4You - Where your identity remains a secret.
+            Cryptic Whisper - Where your identity remains a secret.
           </p>
         </section>
 
@@ -57,7 +57,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="text-center p-4 md:p-6 bg-gray-900 text-white">
-        © 2024 M4You.
+        © 2024 Cryptic Whisper.
       </footer>
     </>
   );

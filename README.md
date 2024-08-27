@@ -1,8 +1,8 @@
-# M4You
+# Cryptic Whisper
 
-M4You is a Next.js application that allows users to send anonymous messages through a shareable public link. This project incorporates secure authentication, message suggestions, and responsive design.
+Cryptic Whisper is a Next.js application that allows users to send anonymous messages through a shareable public link. This project incorporates secure authentication, message suggestions, and responsive design.
 
-![M4You home page](./public/Home.png)
+![Cryptic Whisper home page](./public/Home.png)
 
 ## Features
 
@@ -15,9 +15,9 @@ M4You is a Next.js application that allows users to send anonymous messages thro
 - **Data Storage:** MongoDB for efficient and scalable database management.
 - **Validation:** Zod for schema validation.
 
-![M4You user dashboard](./public/Dashboard.png)
+![Cryptic Whisper user dashboard](./public/Dashboard.png)
 
-![M4You user public message page](./public/send-message.png)
+![Cryptic Whisper user public message page](./public/send-message.png)
 
 ## Tech Stack
 

@@ -14,8 +14,11 @@ const Navbar = () => {
   return (
     <nav className="p-4 md:p-4 shadow-md bg-gray-900 text-white w-full">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-        <Link href="/" className={`text-xl md:text-3xl  font-bold hover:text-gray-300 ${bungee.className}`}>
-          M4You
+        <Link
+          href="/"
+          className={`text-xl md:text-3xl  font-bold hover:text-gray-300 ${bungee.className}`}
+        >
+          Cryptic Whisper
         </Link>
         <div className="flex items-center mt-4 md:mt-0">
           {session ? (
