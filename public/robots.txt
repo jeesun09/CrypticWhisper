@@ -3,4 +3,4 @@ Disallow: /private/
 Disallow: /api/*
 Allow: /
 
-Sitemap: https://m4you.vercel.app/sitemap.xml
+Sitemap: https://crypticwhisper.vercel.app/sitemap.xml
