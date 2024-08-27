@@ -15,7 +15,7 @@ export async function sendVerificationEmail(
     const msg = {
       to: email,
       from: process.env.OUTLOOK_EMAIL!,
-      subject: "M4You | Verification Code",
+      subject: "Cryptic Whisper | Verification Code",
       html: emailHtml,
     };
     await sgMail.send(msg);
