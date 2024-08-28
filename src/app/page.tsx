@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import whyCW from "@/messages.json";
-import { CircleCheckBig, Mail } from "lucide-react";
+import { CircleCheckBig } from "lucide-react";
 
 export default function Home() {
   return (
