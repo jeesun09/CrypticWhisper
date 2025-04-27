@@ -2,6 +2,7 @@ import VerificationEmail from "../../emails/VerificationEmail";
 import { ApiResponse } from "@/types/ApiResponse";
 import { render } from "@react-email/components";
 import sgMail from "@sendgrid/mail";
+import nodemailer from "nodemailer";
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
@@ -11,14 +12,25 @@ export async function sendVerificationEmail(
   verifyCode: string
 ): Promise<ApiResponse> {
   try {
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.GAMIL_USER,
+        pass: process.env.GMAIL_PASSWORD,
+      },
+    });
     const emailHtml = render(VerificationEmail({ username, otp: verifyCode }));
-    const msg = {
+    const mailOptions = {
+      from: process.env.GAMIL_USER!,
       to: email,
-      from: process.env.OUTLOOK_EMAIL!,
       subject: "Cryptic Whisper | Verification Code",
       html: emailHtml,
     };
-    await sgMail.send(msg);
+
+    // Send email using nodemailer
+    await transporter.sendMail(mailOptions);
+
+    // await sgMail.send(msg);
     return {
       success: true,
       message: "Verification code sent successfully",
