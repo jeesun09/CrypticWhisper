@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import MessageCard from "@/components/MessageCard";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -24,7 +24,6 @@ const Page = () => {
     setMessages(messages.filter((message) => message._id !== messageId));
   };
   const { data: session, status } = useSession();
-  
 
   const form = useForm({
     resolver: zodResolver(acceptMessageSchema),
@@ -69,11 +68,15 @@ const Page = () => {
       } catch (error) {
         const axiosError = error as AxiosError<ApiResponse>;
         toast({
-          title: "Error",
+          title: axiosError.response?.status === 404 ? "Oops!" : "Error",
           description:
             axiosError.response?.data.message ||
             "Failed to fetch message setting",
-          variant: "destructive",
+          variant: axiosError.response?.status === 404 ? "default" : "destructive",
+          className:
+            axiosError.response?.status === 404
+              ? "bg-yellow-500 text-white"
+              : "bg-red-500 text-white",
           duration: 5000,
         });
       } finally {
@@ -115,14 +118,14 @@ const Page = () => {
     }
   };
   const username = session?.user?.username;
-  
-  const [profileUrl, setProfileUrl] = useState('')
- useEffect(() => {
-  if(typeof window !== 'undefined' && username){
-     const baseUrl = `${window.location.protocol}//${window.location.host}`;
-     setProfileUrl(`${baseUrl}/u/${username}`)
-  }
- }, [username, session?.user?.username])
+
+  const [profileUrl, setProfileUrl] = useState("");
+  useEffect(() => {
+    if (typeof window !== "undefined" && username) {
+      const baseUrl = `${window.location.protocol}//${window.location.host}`;
+      setProfileUrl(`${baseUrl}/u/${username}`);
+    }
+  }, [username, session?.user?.username]);
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl);
     toast({
@@ -130,16 +133,14 @@ const Page = () => {
       variant: "default",
       duration: 3000,
     });
+  };
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
   }
 
-  
-
-  if(status === 'loading'){
-    return <div>Loading...</div>
-  }
-
-  if(!session || !session.user){
-    return <div>Please Login</div>
+  if (!session || !session.user) {
+    return <div>Please Login</div>;
   }
   return (
     <div className="flex justify-center">
@@ -194,11 +195,13 @@ const Page = () => {
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
           {messages.length > 0 ? (
             messages.map((message, index) => (
-              <MessageCard
-                key={message._id as string}
-                message={message}
-                onMessageDelete={handleDeleteMessage}
-              />
+              <div key={index} className="w-full">
+                <MessageCard
+                  // key={message._id as string}
+                  message={message}
+                  onMessageDelete={handleDeleteMessage}
+                />
+              </div>
             ))
           ) : (
             <p className="text-center md:text-left">No messages to display.</p>

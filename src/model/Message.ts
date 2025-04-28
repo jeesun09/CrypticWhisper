@@ -1,7 +1,7 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
 import { User } from "./User";
 
-enum Intention {
+export enum Intention {
   NONE = "none",
   GREETING = "greeting",
   GOODBYE = "goodbye",
@@ -19,13 +19,13 @@ enum Intention {
   CRUSH = "crush",
 }
 
-export interface Message extends Document {
+export interface IMessage extends Document {
   content: string;
-  userId: User["_id"];
+  userId: Types.ObjectId;
   intention: Intention;
 }
 
-const MessageSchema: Schema<Message> = new Schema(
+const MessageSchema: Schema<IMessage> = new Schema(
   {
     content: {
       type: String,
@@ -46,6 +46,6 @@ const MessageSchema: Schema<Message> = new Schema(
 );
 
 const MessageModel =
-  mongoose.models.Message || mongoose.model<Message>("Message", MessageSchema);
+  mongoose.models.Message || mongoose.model<IMessage>("Message", MessageSchema);
 
 export default MessageModel;

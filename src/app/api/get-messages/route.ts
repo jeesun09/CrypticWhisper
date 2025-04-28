@@ -1,7 +1,8 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 import dbConnect from "@/lib/db/dbConnect";
-import UserModel, { Message } from "@/model/User";
+import UserModel from "@/model/User";
+import MessageModel from "@/model/Message";
 import { User } from "next-auth";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
@@ -36,21 +37,18 @@ export async function GET(request: Request) {
   }
   const userId = new mongoose.Types.ObjectId(user._id);
   try {
-    const user = await UserModel.aggregate([
-      { $match: { _id: userId } },
-      { $unwind: "$messages" },
-      { $sort: { "messages.createdAt": -1 } },
-      { $group: { _id: "$_id", messages: { $push: "$messages" } } },
-    ]);
+    // const user = await UserModel.aggregate([
+    //   { $match: { _id: userId } },
+    //   { $unwind: "$messages" },
+    //   { $sort: { "messages.createdAt": -1 } },
+    //   { $group: { _id: "$_id", messages: { $push: "$messages" } } },
+    // ]);
 
-    const decryptedMessages = user[0].messages.map(
-      (msg: any): Message => ({
-        ...msg,
-        content: decryptContent(msg.content),
-      })
-    );
+    const messages = await MessageModel.find({ userId })
+      .sort({ createdAt: -1 })
+      .lean();
 
-    if (!user || user.length === 0) {
+    if (!messages || messages.length === 0) {
       return NextResponse.json(
         {
           success: false,
@@ -59,6 +57,11 @@ export async function GET(request: Request) {
         { status: 404 }
       );
     }
+
+    const decryptedMessages = messages.map((msg: any) => ({
+      ...msg,
+      content: decryptContent(msg.content),
+    }));
 
     return NextResponse.json(
       {

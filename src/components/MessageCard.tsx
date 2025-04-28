@@ -18,15 +18,14 @@ import { Message } from "@/model/User";
 import { useToast } from "./ui/use-toast";
 import axios from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
-import mongoose from "mongoose";
 
 type MessageCardProps = {
-  key: string;
+  // key: string;
   message: Message;
   onMessageDelete: (messageId: string) => void;
 };
 
-const MessageCard = ({ key, message, onMessageDelete }: MessageCardProps) => {
+const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
   const { toast } = useToast();
   const handleDeleteConfirm = async () => {
     const response = await axios.delete<ApiResponse>(
