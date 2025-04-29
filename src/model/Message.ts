@@ -1,28 +1,20 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 import { User } from "./User";
 
-export enum Intention {
+export enum Feelings {
   NONE = "none",
-  GREETING = "greeting",
-  GOODBYE = "goodbye",
-  THANK_YOU = "thank_you",
   SORRY = "sorry",
-  CONFESSION = "confession",
-  COMPLIMENT = "compliment",
-  ADVICE = "advice",
   QUESTION = "question",
   REQUEST = "request",
-  OFFER = "offer",
-  SUGGESTION = "suggestion",
-  PROMISE = "promise",
-  WARNING = "warning",
   CRUSH = "crush",
+  WARNING = "warning",
+  CONFESSION = "confession",
 }
 
 export interface IMessage extends Document {
   content: string;
   userId: Types.ObjectId;
-  intention: Intention;
+  feeling: Feelings;
 }
 
 const MessageSchema: Schema<IMessage> = new Schema(
@@ -36,10 +28,10 @@ const MessageSchema: Schema<IMessage> = new Schema(
       ref: "User",
       required: true,
     },
-    intention: {
+    feeling: {
       type: String,
-      enum: Object.values(Intention),
-      default: Intention.NONE,
+      enum: Object.values(Feelings),
+      default: Feelings.NONE,
     },
   },
   { timestamps: true }

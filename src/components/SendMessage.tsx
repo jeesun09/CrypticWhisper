@@ -22,12 +22,48 @@ import { useCompletion } from "ai/react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import { icons } from "@/constants/icons";
+import Image from "next/image";
 
 type Props = {
-    username: string;
-}
+  username: string;
+};
 
-const SendMessage = ({username} : Props) => { 
+const feelings = [
+  {
+    label: "none",
+  },
+  {
+    label: "sorry",
+    icon: icons.SorryIcon,
+  },
+  {
+    label: "question",
+    icon: icons.QuestionIcon,
+  },
+  {
+    label: "request",
+    icon: icons.RequestIcon,
+  },
+  {
+    label: "crush",
+    icon: icons.CrushIcon,
+  },
+  {
+    label: "angry",
+    icon: icons.AngryIcon
+  },
+  {
+    label: "warning",
+    icon: icons.WarningIcon,
+  },
+  {
+    label: "confession",
+    icon: icons.ConfessionIcon,
+  },
+];
+
+const SendMessage = ({ username }: Props) => {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
@@ -94,7 +130,7 @@ const SendMessage = ({username} : Props) => {
   };
 
   return (
-    <div className="max-w-lg mx-auto my-4 p-6 bg-white shadow-lg rounded-lg">
+    <div className="mx-auto my-4 p-6 bg-gray-400 shadow-lg rounded-lg backdrop-blur-sm bg-opacity-10">
       <h1 className="text-3xl font-semibold text-gray-900 text-center mb-6">
         Send an Anonymous Message
       </h1>
@@ -121,6 +157,25 @@ const SendMessage = ({username} : Props) => {
               </FormItem>
             )}
           />
+          <div className="flex flex-row gap-2 mb-4">
+            {feelings.map((feeling, index) => (
+              <div
+                key={index}
+                className="group flex w-fit items-center mb-2 gap-2 cursor-pointer border-2 border-gray-300 rounded-xl py-1 px-2 hover:bg-gray-200 transition duration-200 ease-in-out"
+              >
+                {feeling.icon && (
+                  <Image
+                    src={feeling.icon}
+                    alt="sorry-icon"
+                    width={20}
+                    height={20}
+                    className="group-hover:scale-125 transition-transform duration-200"
+                  />
+                )}
+                {feeling.label.replace(/_/g, " ").toUpperCase()}
+              </div>
+            ))}
+          </div>
           <div className="flex justify-end">
             {loading ? (
               <Button

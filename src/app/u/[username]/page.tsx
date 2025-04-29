@@ -1,4 +1,4 @@
-import {  Metadata } from "next";
+import { Metadata } from "next";
 import SendMessage from "@/components/SendMessage";
 
 interface PageProps {
@@ -7,7 +7,9 @@ interface PageProps {
   };
 }
 
-export async function generateMetadata({params}: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const username = params.username;
 
   // Fetch or generate dynamic content for OG tags here
@@ -39,14 +41,13 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   };
 }
 
-
-const UserPage = ({ params } : PageProps) => {
-  const {username} = params;
+const UserPage = ({ params }: PageProps) => {
+  const { username } = params;
   return (
-    <>
-    <SendMessage username={username} />
-    </>
-  )
-}
+    <div className="px-5 py-5 flex flex-col gap-5 items-center justify-center">
+      <SendMessage username={username} />
+    </div>
+  );
+};
 
 export default UserPage;

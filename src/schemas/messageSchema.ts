@@ -5,4 +5,5 @@ export const messageSchema = z.object({
     .string()
     .min(8, "Message must be at least 8 characters long")
     .max(300, "Message must be at most 500 characters long"),
+  feeling: z.enum(["none", "sorry", "question", "request", "crush"]),
 });

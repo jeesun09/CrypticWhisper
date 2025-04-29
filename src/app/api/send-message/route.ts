@@ -1,5 +1,5 @@
 import UserModel from "@/model/User";
-import MessageModel, { Intention } from "@/model/Message";
+import MessageModel, { Feelings } from "@/model/Message";
 import dbConnect from "@/lib/db/dbConnect";
 import { Message } from "@/model/User";
 import CryptoJS from "crypto-js";
@@ -8,7 +8,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   await dbConnect();
 
-  const { username, content, intention } = await request.json();
+  const { username, content, feeling } = await request.json();
   try {
     const user = await UserModel.findOne({ username });
     if (!user) {
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     const newMessage = new MessageModel({
       content: encryptedContent,
       userId: user._id,
-      intention: intention ? intention : Intention.NONE,
+      feeling: feeling ? feeling : Feelings.NONE,
     });
 
     await newMessage.save();
