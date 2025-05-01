@@ -51,7 +51,7 @@ const feelings = [
   },
   {
     label: "angry",
-    icon: icons.AngryIcon
+    icon: icons.AngryIcon,
   },
   {
     label: "warning",
@@ -65,6 +65,10 @@ const feelings = [
 
 const SendMessage = ({ username }: Props) => {
   const [loading, setLoading] = useState(false);
+  const [emojiBubbles, setEmojiBubbles] = useState<
+    { id: number; icon: string }[]
+  >([]);
+  const [currentFeeling, setCurrentFeeling] = useState<string | null>("none");
   const { toast } = useToast();
 
   const initialSuggestMessages =
@@ -129,6 +133,24 @@ const SendMessage = ({ username }: Props) => {
     }
   };
 
+  const handleFeelingClick = (feeling: { label: string; icon?: string }) => {
+    setCurrentFeeling(feeling.label);
+
+    if (!feeling.icon) return;
+
+    // Add multiple emoji bubbles
+    const newBubbles = Array.from({ length: 20 }, (_, index) => ({
+      id: Date.now() + index,
+      icon: feeling.icon || "",
+    }));
+
+    setEmojiBubbles((prev) => [...prev, ...newBubbles]);
+
+    setTimeout(() => {
+      setEmojiBubbles((prev) => prev.slice(newBubbles.length));
+    }, 6000);
+  };
+
   return (
     <div className="mx-auto my-4 p-6 bg-gray-400 shadow-lg rounded-lg backdrop-blur-sm bg-opacity-10">
       <h1 className="text-3xl font-semibold text-gray-900 text-center mb-6">
@@ -161,7 +183,12 @@ const SendMessage = ({ username }: Props) => {
             {feelings.map((feeling, index) => (
               <div
                 key={index}
-                className="group flex w-fit items-center mb-2 gap-2 cursor-pointer border-2 border-gray-300 rounded-xl py-1 px-2 hover:bg-gray-200 transition duration-200 ease-in-out"
+                className={`group flex w-fit items-center mb-2 gap-2 cursor-pointer border-2 border-gray-300 rounded-xl py-1 px-2 hover:bg-gray-200 transition duration-200 ease-in-out ${
+                  currentFeeling === feeling.label
+                    ? "bg-gray-400 border-blue-400"
+                    : ""
+                }`}
+                onClick={() => handleFeelingClick(feeling)}
               >
                 {feeling.icon && (
                   <Image
@@ -197,7 +224,24 @@ const SendMessage = ({ username }: Props) => {
         </form>
       </Form>
 
-      <div className="mt-6">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-50">
+        {emojiBubbles.map((bubble) => (
+          <Image
+            key={bubble.id}
+            src={bubble.icon}
+            alt="emoji"
+            width={60}
+            height={60}
+            className="emoji-bubble"
+            style={{
+              left: `${Math.random() * 90}%`,
+              animationDuration: `${2 + Math.random() * 2}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* <div className="mt-6">
         <Button
           onClick={fetchSuggestMessages}
           className="my-4 w-full"
@@ -228,7 +272,7 @@ const SendMessage = ({ username }: Props) => {
             )}
           </CardContent>
         </Card>
-      </div>
+      </div> */}
       <Separator className="my-6" />
       <div className="text-center">
         <div className="mb-4">Get Your Message Board</div>
